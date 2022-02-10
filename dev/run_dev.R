@@ -7,6 +7,10 @@ golem::detach_all_attached()
 
 # Document and reload your package
 golem::document_and_reload()
+library(shiny)
+library(reactlog)
+reactlog::reactlog_enable()
+options(shiny.reactlog=TRUE)
 
 # Run the application
-run_app()
+run_app(options=list(port=5001))
