@@ -1,17 +1,26 @@
 Package: netballR
-Title: An Amazing Shiny App
+Title: Netball Data Entry Application
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "firstname",
-           family = "lastname",
-           role = c("aut", "cre"),
-           email = "your@email.com")
-Description: What the package does (one paragraph).
-License: What license is it under?
+Authors@R: person('Janith', 'Wanniarachchi', email = 'janithcwanni@gmail.com', role = c('cre', 'aut'))
+Description: This application will be used to enter data during netball matches
+License: MIT + file LICENSE
 Imports: 
+    attempt,
     config (>= 0.3.1),
+    DT,
+    glue,
     golem (>= 0.3.1),
+    googlesheets4,
+    htmltools,
+    processx,
     shiny (>= 1.7.1)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
+URL: https://github.com/janithwanni/netballR
+BugReports: https://github.com/janithwanni/netballR/issues
+Suggests: 
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Language: en-US
