@@ -61,8 +61,9 @@ mod_event_seq_creator_server <- function(id){
       event_key <- paste0("to_",pos_val)
       observeEvent(input[[event_key]],{
         to$pos <- pos_val
-        event$str <- rbind(event$str,
-                           data.frame(FROM = from$pos,EVENT = transit$event,TO = to$pos))
+        event_row <- data.frame(FROM = from$pos,EVENT = transit$event,TO = to$pos)
+        event$str <- rbind(event$str,event_row)
+        append_sheet(event_row)
         from$pos <- pos_val
         to$pos <- NULL
         transit$event <- NULL
@@ -71,8 +72,9 @@ mod_event_seq_creator_server <- function(id){
     
     observeEvent(input$e_shoot,{
       transit$event <- "Shoot"
-      event$str <- rbind(event$str,
-                         data.frame(FROM = from$pos,EVENT = transit$event,TO = NA))
+      event_row <- data.frame(FROM = from$pos,EVENT = transit$event,TO = NA)
+      event$str <- rbind(event$str,event_row)
+      append_sheet(event_row)
       from$pos <- NULL
       to$pos <- NULL
       transit$event <- NULL
@@ -97,9 +99,22 @@ mod_event_seq_creator_server <- function(id){
   })
 }
 
-#' append dataframe to google sheets
+#' read dataframe from google sheets
 #'
 #' @noRd
-append_sheets <- function(df){
+read_sheet <- function(){
   # TODO implement
+  SHEET <- "https://docs.google.com/spreadsheets/d/1GVLadVyxDkcAxZkQeAMpPpOjla2bi6GtLdwpCyGmBCk/edit?usp=sharing"
+  googlesheets4::gs4_deauth()
+  data <- googlesheets4::read_sheet(SHEET)
+  return(data)
+}
+
+#' append dataframe from google sheets
+#' 
+#' @noRd
+append_sheet <- function(df_row){
+  SHEET <- "https://docs.google.com/spreadsheets/d/1GVLadVyxDkcAxZkQeAMpPpOjla2bi6GtLdwpCyGmBCk/edit?usp=sharing"
+  googlesheets4::gs4_auth(cache="secrets",email="janithcwanni@gmail.com")
+  googlesheets4::sheet_append(SHEET,df_row)
 }
