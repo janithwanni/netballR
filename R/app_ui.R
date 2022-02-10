@@ -10,7 +10,18 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic 
     fluidPage(
-      h1("netballR")
+      titlePanel("Team SL"),
+      fluidRow(column(12,
+                      h3("Attack mode") # TODO need to make dynamic
+                      )),
+      fluidRow(
+        column(6,
+               h1("Event sequence"),
+               mod_event_seq_creator_ui("event_seq_creator_ui_1")
+               ),
+        column(6,
+               h1("Special Events"))
+      )
     )
   )
 }
