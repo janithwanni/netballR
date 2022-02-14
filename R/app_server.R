@@ -31,7 +31,14 @@ app_server <- function( input, output, session ) {
       shinyjs::hideElement(id="team_b_match_creds")
     }
   })
+  observeEvent(input$admin_creds,{
+    if(input$admin_creds == "1234"){
+      shinyjs::showElement(id="admin")
+      shinyjs::hideElement(id="admin_creds")
+    }
+  })
   mod_event_seq_creator_server("event_seq_creator_ui_1",r)
   mod_event_seq_creator_server("event_seq_creator_ui_2",r)
+  mod_team_info_form_server("team_info_form_ui_1")
   # mod_event_seq_defence_server("event_seq_defence_ui_1",r)
 }
