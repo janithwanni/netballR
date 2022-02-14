@@ -32,7 +32,8 @@ app_ui <- function(request) {
                    ),
           tabPanel("Team Information",h1("Team Information"),
                    fluidRow(textInput("tinfo_creds","Enter Credentials")),
-                   shinyjs::hidden(fluidRow(id = "tinfo", "I AM PANEL A"))
+                   shinyjs::hidden(fluidRow(id = "tinfo", 
+                                            mod_team_info_form_ui("team_info_form_ui_1")))
                    ),
           tabPanel("Team A Match",h1("Team A Match Data"),
                    fluidRow(textInput("team_a_match_creds","Enter Credentials")),
@@ -43,6 +44,10 @@ app_ui <- function(request) {
                    fluidRow(textInput("team_b_match_creds","Enter Credentials")),
                    shinyjs::hidden(fluidRow(id = "team_b_match",
                                             mod_event_seq_creator_ui("event_seq_creator_ui_2")))
+                   ),
+          tabPanel("Admin",h1("Control Panel"),
+                   fluidRow(textInput("admin_creds","Enter Credentials")),
+                   shinyjs::hidden(fluidRow(id = "admin",wellPanel("Admin Panel")))
                    )
         )
       )
