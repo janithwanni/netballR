@@ -13,10 +13,16 @@ app_server <- function( input, output, session ) {
       shinyjs::hideElement(id="pinfo_creds")
     }
   })
-  observeEvent(input$tinfo_creds,{
-    if(input$tinfo_creds == "1234"){
-      shinyjs::showElement(id="tinfo")
-      shinyjs::hideElement(id="tinfo_creds")
+  observeEvent(input$ta_info_creds,{
+    if(input$ta_info_creds == ""){
+      shinyjs::showElement(id="ta_info")
+      shinyjs::hideElement(id="ta_info_creds")
+    }
+  })
+  observeEvent(input$tb_info_creds,{
+    if(input$tb_info_creds == ""){
+      shinyjs::showElement(id="tb_info")
+      shinyjs::hideElement(id="tb_info_creds")
     }
   })
   observeEvent(input$team_a_match_creds,{
@@ -39,6 +45,7 @@ app_server <- function( input, output, session ) {
   })
   mod_event_seq_creator_server("event_seq_creator_ui_1",r)
   mod_event_seq_creator_server("event_seq_creator_ui_2",r)
-  mod_team_info_form_server("team_info_form_ui_1")
+  mod_team_info_form_server("team_info_form_ui_1","A")
+  mod_team_info_form_server("team_info_form_ui_2","B")
   # mod_event_seq_defence_server("event_seq_defence_ui_1",r)
 }

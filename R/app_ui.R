@@ -8,39 +8,33 @@ app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
-    # Initialize shinyJS
     # Your application UI logic 
     fluidPage(
-      shinyjs::useShinyjs(),
-      titlePanel("Team SL"),
-      # fluidRow(
-      #   column(6,
-      #          h1("Attack mode"),
-      #          mod_event_seq_creator_ui("event_seq_creator_ui_1")
-      #          ),
-      #   column(6,
-      #          h1("Defence mode"),
-      #          mod_event_seq_defence_ui("event_seq_defence_ui_1")
-      #          )
-      # )
+      shinyjs::useShinyjs(), # Initialize shinyJS
+      titlePanel("netballR"),
       mainPanel(
         tabsetPanel(
           tabPanel("Dashboard",fluidRow(h4("Dashboard goes here"))),
-          tabPanel("Player Information",h1("Player information"),
+          tabPanel("Player Information",
                    fluidRow(textInput("pinfo_creds","Enter Credentials")),
-                   shinyjs::hidden(fluidRow(id = "pinfo", "I AM PANEL A"))
+                   shinyjs::hidden(fluidRow(id = "pinfo", "Player Info"))
                    ),
-          tabPanel("Team Information",h1("Team Information"),
-                   fluidRow(textInput("tinfo_creds","Enter Credentials")),
-                   shinyjs::hidden(fluidRow(id = "tinfo", 
-                                            mod_team_info_form_ui("team_info_form_ui_1")))
+          tabPanel("Team A Information",
+                   fluidRow(textInput("ta_info_creds","Enter Credentials")),
+                   shinyjs::hidden(fluidRow(id = "ta_info", 
+                                            mod_team_info_form_ui("team_info_form_ui_1","A")))
                    ),
-          tabPanel("Team A Match",h1("Team A Match Data"),
+          tabPanel("Team A Match",
                    fluidRow(textInput("team_a_match_creds","Enter Credentials")),
                    shinyjs::hidden(fluidRow(id = "team_a_match", 
                                             mod_event_seq_creator_ui("event_seq_creator_ui_1")))
                    ),
-          tabPanel("Team B Match",h1("Team B Match Data"),
+          tabPanel("Team B Information",
+                   fluidRow(textInput("tb_info_creds","Enter Credentials")),
+                   shinyjs::hidden(fluidRow(id = "tb_info", 
+                                            mod_team_info_form_ui("team_info_form_ui_2","B")))
+                   ),
+          tabPanel("Team B Match",
                    fluidRow(textInput("team_b_match_creds","Enter Credentials")),
                    shinyjs::hidden(fluidRow(id = "team_b_match",
                                             mod_event_seq_creator_ui("event_seq_creator_ui_2")))
