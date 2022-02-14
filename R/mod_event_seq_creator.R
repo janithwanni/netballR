@@ -23,7 +23,13 @@ mod_event_seq_creator_ui <- function(id){
              ),
       column(4,
              fluidRow(column(12,actionButton(ns("e_pass"),label = "PASS",width = "100%"))),
-             fluidRow(column(12,actionButton(ns("e_shoot"),label = "SHOOT",width = "100%")))
+             fluidRow(column(12,actionButton(ns("e_shoot"),label = "SHOOT",width = "100%"))),
+             fluidRow(column(12,actionButton(ns("e_sideline"),label = "SIDELINE PASS",width = "100%"))),
+             fluidRow(column(12,actionButton(ns("e_backline"),label = "BACKLINE PASS",width = "100%"))),
+             fluidRow(column(12,actionButton(ns("e_freepass"),label = "FREE PASS",width = "100%"))),
+             fluidRow(column(12,actionButton(ns("e_penaltypass"),label = "PENALTY PASS",width = "100%"))),
+             fluidRow(column(12,actionButton(ns("e_intercept"),label = "WAS INTERCEPTED",width = "100%"))),
+             fluidRow(column(12,actionButton(ns("e_turnover"),label = "WAS TURNED OVER",width = "100%"))),
              ),
       column(4,
              fluidRow(column(12,actionButton(ns("to_C"),label = "C",width = "100%"))),
@@ -42,7 +48,7 @@ mod_event_seq_creator_ui <- function(id){
 #' event_seq_creator Server Functions
 #'
 #' @noRd 
-mod_event_seq_creator_server <- function(id){
+mod_event_seq_creator_server <- function(id,r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     from <- reactiveValues(pos = NULL)
@@ -61,18 +67,48 @@ mod_event_seq_creator_server <- function(id){
       event_key <- paste0("to_",pos_val)
       observeEvent(input[[event_key]],{
         to$pos <- pos_val
-        event_row <- data.frame(FROM = from$pos,EVENT = transit$event,TO = to$pos)
+        event_row <- create_row(from = from$pos,event = transit$event,to = to$pos)
         event$str <- rbind(event$str,event_row)
         append_sheet(event_row)
         from$pos <- pos_val
         to$pos <- NULL
         transit$event <- NULL
+        r$mode <- "Defence"
       })
     })
     
     observeEvent(input$e_shoot,{
       transit$event <- "Shoot"
-      event_row <- data.frame(FROM = from$pos,EVENT = transit$event,TO = NA)
+      event_row <- create_row(from = from$pos,event = transit$event,to = NA) 
+      # data.frame(FROM = from$pos,EVENT = transit$event,TO = NA)
+      event$str <- rbind(event$str,event_row)
+      append_sheet(event_row)
+      from$pos <- NULL
+      to$pos <- NULL
+      transit$event <- NULL
+      r$mode <- "Defence"
+    })
+    
+    observeEvent(input$e_pass,{
+      transit$event <- "Pass"
+    })
+    
+    observeEvent(input$e_intercept,{
+      transit$event <- "Intercepted"
+      event_row <- create_row(from = from$pos,event = transit$event,to = NA)
+        # data.frame(FROM = from$pos,EVENT = transit$event,TO = NA)
+      event$str <- rbind(event$str,event_row)
+      append_sheet(event_row)
+      from$pos <- NULL
+      to$pos <- NULL
+      transit$event <- NULL
+      r$mode <- "Defence"
+    })
+    
+    observeEvent(input$e_turnover,{
+      transit$event <- "Turned over"
+      event_row <- create_row(from = from$pos,event = transit$event,to = NA)
+      # data.frame(FROM = from$pos,EVENT = transit$event,TO = NA)
       event$str <- rbind(event$str,event_row)
       append_sheet(event_row)
       from$pos <- NULL
@@ -80,13 +116,25 @@ mod_event_seq_creator_server <- function(id){
       transit$event <- NULL
     })
     
-    observeEvent(input$e_pass,{
-      transit$event <- "Pass"
+    observeEvent(input$e_sideline,{
+      transit$event <- "Sideline Pass"
+    })
+    
+    observeEvent(input$e_backline,{
+      transit$event <- "Backline Pass"
+    })
+    
+    observeEvent(input$e_freepass,{
+      transit$event <- "Free Pass"
+    })
+    
+    observeEvent(input$e_penalty,{
+      transit$event <- "Penalty Pass"
     })
     
     output$event_seq_table <- renderTable({
       return(event$str)
-    })
+    },width="100%")
     
     output$ball_holder <- renderText({
       if(is.null(from$pos)){
@@ -117,4 +165,13 @@ append_sheet <- function(df_row){
   SHEET <- "https://docs.google.com/spreadsheets/d/1GVLadVyxDkcAxZkQeAMpPpOjla2bi6GtLdwpCyGmBCk/edit?usp=sharing"
   googlesheets4::gs4_auth(cache="secrets",email="janithcwanni@gmail.com")
   googlesheets4::sheet_append(SHEET,df_row)
+}
+
+
+#' create dataframe row from attack mode data
+#' 
+#' @noRd
+create_row <- function(from,event,to,team="SL"){
+  return(data.frame(Team = "SL",Mode = "Attack",Time = as.numeric(Sys.time()),
+                    From = from,Event = event,To = to))
 }
