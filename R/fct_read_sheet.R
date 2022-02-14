@@ -8,6 +8,6 @@
 #' @noRd
 read_gsheet <- function(sheet_name){
   ssid <- get_gsheet_spec()
-  data <- googlesheets4::read_sheet(ssid,sheet_name = sheet_name)
+  data <- googlesheets4::read_sheet(ssid,sheet = sheet_name)
   return(data)
 }

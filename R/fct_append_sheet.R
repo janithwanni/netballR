@@ -9,5 +9,5 @@
 #' @noRd
 append_gsheet <- function(sheet_name,df_row){
   ssid <- get_gsheet_spec()
-  googlesheets4::sheet_append(ssid,df_row)
+  googlesheets4::sheet_append(ssid,df_row,sheet=sheet_name)
 }
