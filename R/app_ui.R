@@ -8,19 +8,43 @@ app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
+    # Initialize shinyJS
     # Your application UI logic 
     fluidPage(
+      shinyjs::useShinyjs(),
       titlePanel("Team SL"),
-      fluidRow(column(12,
-                      h3("Attack mode") # TODO need to make dynamic
-                      )),
-      fluidRow(
-        column(6,
-               h1("Event sequence"),
-               mod_event_seq_creator_ui("event_seq_creator_ui_1")
-               ),
-        column(6,
-               h1("Special Events"))
+      # fluidRow(
+      #   column(6,
+      #          h1("Attack mode"),
+      #          mod_event_seq_creator_ui("event_seq_creator_ui_1")
+      #          ),
+      #   column(6,
+      #          h1("Defence mode"),
+      #          mod_event_seq_defence_ui("event_seq_defence_ui_1")
+      #          )
+      # )
+      mainPanel(
+        tabsetPanel(
+          tabPanel("Dashboard",fluidRow(h4("Dashboard goes here"))),
+          tabPanel("Player Information",h1("Player information"),
+                   fluidRow(textInput("pinfo_creds","Enter Credentials")),
+                   shinyjs::hidden(fluidRow(id = "pinfo", "I AM PANEL A"))
+                   ),
+          tabPanel("Team Information",h1("Team Information"),
+                   fluidRow(textInput("tinfo_creds","Enter Credentials")),
+                   shinyjs::hidden(fluidRow(id = "tinfo", "I AM PANEL A"))
+                   ),
+          tabPanel("Team A Match",h1("Team A Match Data"),
+                   fluidRow(textInput("team_a_match_creds","Enter Credentials")),
+                   shinyjs::hidden(fluidRow(id = "team_a_match", 
+                                            mod_event_seq_creator_ui("event_seq_creator_ui_1")))
+                   ),
+          tabPanel("Team B Match",h1("Team B Match Data"),
+                   fluidRow(textInput("team_b_match_creds","Enter Credentials")),
+                   shinyjs::hidden(fluidRow(id = "team_b_match",
+                                            mod_event_seq_creator_ui("event_seq_creator_ui_2")))
+                   )
+        )
       )
     )
   )
