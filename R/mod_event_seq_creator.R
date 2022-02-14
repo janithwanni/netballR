@@ -147,27 +147,6 @@ mod_event_seq_creator_server <- function(id,r){
   })
 }
 
-#' read dataframe from google sheets
-#'
-#' @noRd
-read_sheet <- function(){
-  # TODO implement
-  SHEET <- "https://docs.google.com/spreadsheets/d/1GVLadVyxDkcAxZkQeAMpPpOjla2bi6GtLdwpCyGmBCk/edit?usp=sharing"
-  googlesheets4::gs4_deauth()
-  data <- googlesheets4::read_sheet(SHEET)
-  return(data)
-}
-
-#' append dataframe from google sheets
-#' 
-#' @noRd
-append_sheet <- function(df_row){
-  SHEET <- "https://docs.google.com/spreadsheets/d/1GVLadVyxDkcAxZkQeAMpPpOjla2bi6GtLdwpCyGmBCk/edit?usp=sharing"
-  googlesheets4::gs4_auth(cache="secrets",email="janithcwanni@gmail.com")
-  googlesheets4::sheet_append(SHEET,df_row)
-}
-
-
 #' create dataframe row from attack mode data
 #' 
 #' @noRd
