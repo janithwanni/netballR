@@ -41,7 +41,7 @@ app_ui <- function(request) {
                    ),
           tabPanel("Admin",h1("Control Panel"),
                    fluidRow(textInput("admin_creds","Enter Credentials")),
-                   shinyjs::hidden(fluidRow(id = "admin",wellPanel("Admin Panel")))
+                   shinyjs::hidden(fluidRow(id = "admin",mod_control_panel_ui("control_panel_ui_1")))
                    )
         )
       )
