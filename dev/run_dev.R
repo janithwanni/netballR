@@ -13,4 +13,4 @@ reactlog::reactlog_enable()
 options(shiny.reactlog=TRUE)
 
 # Run the application
-run_app(options=list(port=5001))
+run_app(options=list(port=5001,launch.browser = FALSE))
