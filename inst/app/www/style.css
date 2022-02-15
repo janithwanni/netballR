@@ -1,0 +1,5 @@
+.btn[id^="event_seq_creator_ui"]{
+  /* width:100% */
+  margin: 10px 0 10px 0;
+  padding: 20px;
+}
