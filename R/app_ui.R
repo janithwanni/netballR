@@ -12,7 +12,7 @@ app_ui <- function(request) {
     fluidPage(
       shinyjs::useShinyjs(), # Initialize shinyJS
       titlePanel("netballR"),
-      mainPanel(
+      
         tabsetPanel(
           tabPanel("Dashboard",fluidRow(h4("Dashboard goes here"))),
           tabPanel("Player Information",
@@ -44,8 +44,8 @@ app_ui <- function(request) {
                    shinyjs::hidden(fluidRow(id = "admin",mod_control_panel_ui("control_panel_ui_1")))
                    )
         )
-      )
-    )
+      
+    ,style="width: 80%")
   )
 }
 

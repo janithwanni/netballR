@@ -43,8 +43,8 @@ app_server <- function( input, output, session ) {
       shinyjs::hideElement(id="admin_creds")
     }
   })
-  mod_event_seq_creator_server("event_seq_creator_ui_1",r)
-  mod_event_seq_creator_server("event_seq_creator_ui_2",r)
+  mod_event_seq_creator_server("event_seq_creator_ui_1",r,"A")
+  mod_event_seq_creator_server("event_seq_creator_ui_2",r,"B")
   mod_team_info_form_server("team_info_form_ui_1","A")
   mod_team_info_form_server("team_info_form_ui_2","B")
   mod_control_panel_server("control_panel_ui_1")
