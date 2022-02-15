@@ -15,11 +15,12 @@ mod_team_info_form_ui <- function(id,team_letter){
   tagList(
     fluidRow(column(12,h1(paste("Team ",team_letter)),
                     textInput(ns("team_name"),"Team Name"),
+                    actionButton(ns("refresh_pnames"),"Refresh Player Names"),
                     lapply(1:14,function(i){
                       fluidRow(
                         column(6,selectInput(ns(paste0("t",team_letter,"_p",i)),
                                              paste("Player",i,"Name"),
-                                             choices = name_tib$Name)),
+                                             choices = c(name_tib$Name,"None"))),
                         column(6,selectInput(ns(paste0("t",team_letter,"_pos",i)),
                                              paste("Player",i,"Position"),
                                     choices = POSITIONS,width = "50%",selected = POSITIONS[i]))
@@ -52,6 +53,11 @@ mod_team_info_form_server <- function(id,team_letter){
                           Player_name = player_name,Position = position)
         append_gsheet(sheet = "Team Information",row)
       }
+    })
+    
+    observeEvent(input$refresh_pnames,{
+      names_tib <- read_gsheet("Player information")
+      updateSelectInput(choices = c(names_tib$Name,"None"))
     })
   })
 }
